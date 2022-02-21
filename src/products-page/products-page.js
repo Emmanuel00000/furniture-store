@@ -1,5 +1,4 @@
-import React, { useEffect, useReducer, useRef } from 'react'
-import fetchData from '../fetch/fetchData'
+import React, { useReducer, useRef } from 'react'
 import data from '../fetch/data'
 import { GetProducts } from '../fetch/get-products'
 import './products-page.css'
@@ -15,7 +14,7 @@ import {
     price,
 } from './products-page-utils'
 
-const productsUrl = 'https://course-api.com/react-store-products'
+// const productsUrl = 'https://course-api.com/react-store-products'
 let expState, expDispatch, expRangeTitleRef
 
 const Products = () => {

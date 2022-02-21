@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import banner from './banner.jpg'
 import './home-page.css'
 import '../products-page/products-page.css'
@@ -20,7 +20,7 @@ const HomePage = () => {
     const header = useRef(null)
     useEffect(() => {
         setHeaderHeight(header.current.getBoundingClientRect().height)
-    }, [])
+    })
 
     return (
         <>
