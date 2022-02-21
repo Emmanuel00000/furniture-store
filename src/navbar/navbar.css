@@ -1,0 +1,49 @@
+:root {
+    --darkYellow: #ffb703;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: center;
+    padding: 20px;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    height: 70px;
+}
+.navBackground {
+    background-color: white;
+    box-shadow: 0px 0px 52px 0px rgba(0, 0, 0, 0.3);
+}
+.storeName {
+    color: var(--darkYellow);
+    font-family: 'Island Moments', cursive;
+    font-size: 4rem;
+    text-align: center;
+    text-transform: capitalize;
+}
+.links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+.link {
+    text-decoration: none;
+    margin: auto 15px;
+    font-size: 1.3rem;
+    color: white;
+    font-weight: bold;
+    transition-duration: 0.2s;
+}
+.link:hover {
+    color: var(--darkYellow);
+}
+.linkColor {
+    color: black;
+}
