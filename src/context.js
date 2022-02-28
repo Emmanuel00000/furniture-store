@@ -5,16 +5,16 @@ const AppContext = React.createContext()
 export const AppProvider = ({ children }) => {
     const [headerHeight, setHeaderHeight] = useState(0)
     const [scroll, setScroll] = useState(false)
-    const [data, setData] = useState([])
+    const [productsData, setProductsData] = useState([])
     const productsUrl = 'https://course-api.com/react-store-products'
     useEffect(() => {
         const valueFunc = async () => {
-            const value = await fetchData(productsUrl)
-            setData(value)
+            const value1 = await fetchData(productsUrl)
+            setProductsData(value1)
         }
         valueFunc()
     }, [])
-    if (data.length <= 0) return null
+    if (productsData.length <= 0) return null
     return (
         <AppContext.Provider
             value={{
@@ -22,7 +22,7 @@ export const AppProvider = ({ children }) => {
                 setHeaderHeight,
                 scroll,
                 setScroll,
-                data,
+                productsData,
             }}
         >
             {children}

@@ -11,7 +11,7 @@ const SingleProduct = () => {
     useEffect(() => {
         const selectedProduct = data.find((item) => item.id === id)
         setCurrName(selectedProduct.name)
-    }, [id])
+    }, [id, data])
     return (
         <>
             <div className="productsHeader">

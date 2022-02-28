@@ -4,7 +4,7 @@ import { state, dispatch, rangeTitleRef } from './products-page'
 import { useGlobalContext } from '../context'
 
 export const UtilsFunc = () => {
-    const { data } = useGlobalContext()
+    const { productsData: data } = useGlobalContext()
    
     const initState = {
         input: '',
