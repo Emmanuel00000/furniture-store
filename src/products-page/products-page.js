@@ -1,23 +1,24 @@
 import React, { useReducer, useRef } from 'react'
-import data from '../fetch/data'
+// import data from '../fetch/data'
 import { GetProducts } from '../fetch/get-products'
 import './products-page.css'
 import { Link } from 'react-router-dom'
 import reducer from './reducer'
-import { priceFormat } from './products-page-utils'
-import {
-    initState,
-    submitHandler,
-    options,
-    optionsClickHandler,
-    ColorButtons,
-    price,
-} from './products-page-utils'
+import { UtilsFunc } from './products-page-utils'
 
-// const productsUrl = 'https://course-api.com/react-store-products'
 let expState, expDispatch, expRangeTitleRef
 
 const Products = () => {
+    const {
+        data,
+        initState,
+        submitHandler,
+        options,
+        optionsClickHandler,
+        ColorButtons,
+        priceFormat,
+        price,
+    } = UtilsFunc()
     const [state, dispatch] = useReducer(reducer, initState)
     const rangeTitleRef = useRef(null)
     expState = state

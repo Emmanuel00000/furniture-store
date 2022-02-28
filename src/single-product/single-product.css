@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+.forwardSlash {
+    color: rgba(0, 0, 0, 0.6);
+}
+.toProducts {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.6);
+    transition-duration: 0.2s;
+}
+.toProducts:hover {
+    color: var(--darkYellow);
+}

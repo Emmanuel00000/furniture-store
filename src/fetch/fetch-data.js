@@ -1,16 +1,16 @@
 const fetchData = async (url) => {
     try {
+        let data 
         const get = await fetch(url)
         if (get.status >= 200 && get.status <= 299) {
-            const data = await get.json()
-            console.log(data)
-            console.log(get)
+            data = await get.json()
         } else {
             throw new Error(get.statusText)
         }
+        return data
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
-export default fetchData
+export default fetchData 

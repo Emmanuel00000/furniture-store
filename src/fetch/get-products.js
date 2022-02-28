@@ -1,16 +1,24 @@
 import React from 'react'
-import { priceFormat } from '../products-page/products-page-utils'
+import { Link } from 'react-router-dom'
+import { UtilsFunc } from '../products-page/products-page-utils'
 
 export const GetProducts = ({ data }) => {
+    const { priceFormat } = UtilsFunc()
     return (
         <>
             {data.map((product) => {
                 const { id, image, name, price, company } = product
                 return (
                     <div key={id}>
-                        <div className="productsImgContainer">
-                            <img className="productsImg" src={image} alt="" />
-                        </div>
+                        <Link to={`/product-info/${id}`}>
+                            <div className="productsImgContainer">
+                                <img
+                                    className="productsImg"
+                                    src={image}
+                                    alt=""
+                                />
+                            </div>
+                        </Link>
                         <div className="namePriceContainer">
                             <h4 className="name">{name}</h4>
                             <p className="price">

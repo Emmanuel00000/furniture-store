@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import HomePage from './home-page/home-page'
 import Products from './products-page/products-page'
 import Navbar from './navbar/navbar'
+import SingleProduct from './single-product/single-product'
 
 function App() {
     return (
@@ -11,7 +12,22 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/products" element={<Products />} />
-                <Route path="*" element={<h1>error, invalid url</h1>} />
+                <Route path="/product-info/:id" element={<SingleProduct />} />
+                <Route
+                    path="*"
+                    element={
+                        <h1
+                            style={{
+                                color: 'red',
+                                marginTop: '45vh',
+                                textAlign: 'center',
+                                letterSpacing: '2px',
+                            }}
+                        >
+                            error, invalid url
+                        </h1>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     )
