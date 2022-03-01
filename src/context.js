@@ -9,8 +9,8 @@ export const AppProvider = ({ children }) => {
     const productsUrl = 'https://course-api.com/react-store-products'
     useEffect(() => {
         const valueFunc = async () => {
-            const value1 = await fetchData(productsUrl)
-            setProductsData(value1)
+            const value = await fetchData(productsUrl)
+            setProductsData(value)
         }
         valueFunc()
     }, [])

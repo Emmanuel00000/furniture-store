@@ -10,7 +10,7 @@ export const GetProducts = ({ data }) => {
                 const { id, image, name, price, company } = product
                 return (
                     <div key={id}>
-                        <Link to={`/product-info/${id}`}>
+                        <Link to={`/single-product/${id}`}>
                             <div className="productsImgContainer">
                                 <img
                                     className="productsImg"

@@ -13,3 +13,114 @@
 .toProducts:hover {
     color: var(--darkYellow);
 }
+.prodContents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 85vw;
+    margin: 80px auto;
+    column-gap: 60px;
+}
+.mainProdImgContainer {
+    width: 550px;
+    overflow: hidden;
+}
+.mainProdImg {
+    width: 100%;
+    display: block;
+}
+.smallImgContainer {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.prodImgContainer {
+    width: 100px;
+    height: 80px;
+    overflow: hidden;
+}
+.prodImg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.productName {
+    font-size: 2rem;
+    text-transform: capitalize;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+.stars {
+    color: var(--darkYellow);
+    margin: 2px;
+}
+.reviews {
+    margin-left: 10px;
+}
+.prodPrice {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    margin: 15px 0;
+}
+.description {
+    line-height: 35px;
+    margin-bottom: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.detailsContainer {
+    margin-bottom: 30px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    row-gap: 15px;
+}
+.details {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.prodUnderline {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin: 15px 0;
+}
+.prodColors {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    row-gap: 15px;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-bottom: 15px;
+}
+.addProd {
+    display: flex;
+    align-items: center;
+}
+.prodAmount {
+    font-size: 2.3rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    width: 60px;
+    text-align: center;
+}
+.amountIcon {
+    padding-top: 5px;
+    border: none;
+    font-size: 1.2rem;
+    background-color: white;
+}
+.toCart {
+    margin-top: 20px;
+    padding: 7px 20px;
+    text-transform: uppercase;
+    font-size: 1rem;
+    border: none;
+    background-color: var(--darkRed);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+}
+.toCart:hover,
+.amountIcon:hover,
+.mainProdImgContainer:hover,
+.prodImgContainer:hover {
+    cursor: pointer;
+}

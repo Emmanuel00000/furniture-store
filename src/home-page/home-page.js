@@ -5,12 +5,13 @@ import '../products-page/products-page.css'
 import data from '../fetch/data'
 import { GetProducts } from '../fetch/get-products'
 import { MdHistoryEdu } from 'react-icons/md'
-import { GiDiamondHard } from 'react-icons/gi'
-import { GiCompass } from 'react-icons/gi'
-import { FaTwitter } from 'react-icons/fa'
-import { FaInstagram } from 'react-icons/fa'
-import { FaFacebookF } from 'react-icons/fa'
-import { FaPinterest } from 'react-icons/fa'
+import { GiDiamondHard, GiCompass } from 'react-icons/gi'
+import {
+    FaTwitter,
+    FaInstagram,
+    FaFacebookF,
+    FaPinterest,
+} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../context'
 
