@@ -14,6 +14,8 @@ const SingleProduct = () => {
     const { productsData: data } = useGlobalContext()
     const { id } = useParams()
     const [count, setCount] = useState(1)
+    const [imgIndex, setImgIndex] = useState(0)
+    const [colorIndex, setColorIndex] = useState(0)
     const [currName, setCurrName] = useState('')
     useEffect(() => {
         const selectedProduct = data.find((item) => item.id === id)
@@ -62,8 +64,9 @@ const SingleProduct = () => {
                 key={index}
                 type="button"
                 id="color"
-                className={`color`}
+                className={`color ${index === colorIndex && 'outline'}`}
                 style={{ background: color }}
+                onClick={(e) => setColorIndex(index)}
             ></button>
         ))
 
@@ -87,13 +90,19 @@ const SingleProduct = () => {
                     <div className="mainProdImgContainer">
                         <img
                             className="mainProdImg"
-                            src={images[0].thumbnails.large.url}
+                            src={images[imgIndex].thumbnails.large.url}
                             alt=""
                         />
                     </div>
                     <div className="smallImgContainer">
                         {images.map((item, index) => (
-                            <div className="prodImgContainer" key={index}>
+                            <div
+                                className={`prodImgContainer ${
+                                    index === imgIndex && 'prodImgOutline'
+                                }`}
+                                key={index}
+                                onClick={() => setImgIndex(index)}
+                            >
                                 <img
                                     className="prodImg"
                                     src={item.thumbnails.large.url}
@@ -103,6 +112,7 @@ const SingleProduct = () => {
                         ))}
                     </div>
                 </div>
+                
                 <div>
                     <h1 className="productName">{name}</h1>
                     <div>
@@ -115,11 +125,13 @@ const SingleProduct = () => {
                     <p className="description">{description}</p>
                     <div className="detailsContainer">
                         <span className="details">available :</span>
-                        <span>{stock > 0 ? 'in stock' : 'out of stock'}</span>
+                        <span className={`caps ${stock === 0 && 'noStock'}`}>
+                            {stock > 0 ? 'in stock' : 'out of stock'}
+                        </span>
                         <span className="details">sku :</span>
                         <span>{sku}</span>
                         <span className="details">brand :</span>
-                        <span>{company}</span>
+                        <span className="caps">{company}</span>
                     </div>
                     <div className="prodUnderline"></div>
                     <div className="prodColors">
@@ -140,7 +152,9 @@ const SingleProduct = () => {
                         >
                             <BiMinus />
                         </button>
-                        <span className="prodAmount">{count}</span>
+                        <span className="prodAmount">
+                            {stock > 0 ? count : 0}
+                        </span>
                         <button
                             type="button"
                             className="amountIcon"

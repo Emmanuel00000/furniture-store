@@ -166,7 +166,9 @@
     letter-spacing: 2px;
 }
 .price {
-    color: #e0ae08;
+    color: #008040;
+    letter-spacing: 1px;
+    font-weight: bold;
 }
 .company {
     margin-top: 3px;

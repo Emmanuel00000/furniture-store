@@ -126,13 +126,32 @@ header::before {
     border: 2px solid var(--darkRed);
     margin: 10px auto 0 auto;
 }
+.backIcon,
+.forwardIcon {
+    position: absolute;
+    top: 46%;
+    font-size: 3rem;
+}
+.backIcon {
+    left: 4%;
+}
+.forwardIcon {
+    right: 4%;
+}
+.backIcon:hover,
+.forwardIcon:hover {
+    cursor: pointer;
+}
 .featuredProductsContainer {
-    margin: 60px 120px;
+    width: 80vw;
+    height: 242px;
+    margin: 60px auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
+    overflow: hidden;
 }
-.featuredProducts > button {
+.featuredProducts button {
     font-size: 0.8rem;
     border: none;
     background-color: var(--darkRed);
@@ -141,15 +160,19 @@ header::before {
     padding: 10px 20px;
     display: block;
     margin: 0 auto;
+    letter-spacing: 1px;
     transition-duration: 0.6s;
 }
-.featuredProducts > button:hover {
+.featuredProducts button:hover {
     cursor: pointer;
     background: white;
     color: var(--darkRed);
     transform: var(--slightScale);
     font-weight: bold;
     border: 2px solid var(--darkRed);
+}
+.removeLine {
+    text-decoration: none;
 }
 
 /* --------------------- goals------------------- */

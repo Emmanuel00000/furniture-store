@@ -1,8 +1,8 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState, useReducer } from 'react'
 import banner from './banner.jpg'
 import './home-page.css'
 import '../products-page/products-page.css'
-import data from '../fetch/data'
+// import data from '../fetch/data'
 import { GetProducts } from '../fetch/get-products'
 import { MdHistoryEdu } from 'react-icons/md'
 import { GiDiamondHard, GiCompass } from 'react-icons/gi'
@@ -12,16 +12,31 @@ import {
     FaFacebookF,
     FaPinterest,
 } from 'react-icons/fa'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../context'
 
 const HomePage = () => {
-    const featuredData = data.filter((_, index) => index < 3)
-    const { setHeaderHeight, scroll } = useGlobalContext()
-    const header = useRef(null)
+    const { setHeaderHeight, scroll, productsData } = useGlobalContext()
     useEffect(() => {
         setHeaderHeight(header.current.getBoundingClientRect().height)
     })
+    const featuredData = productsData.filter((item) => item.featured === true)
+    const [count, setCount] = useState(-1)
+    const reducer = (state, action) => {
+        let newState
+        if (action.type === 'SHIFT') {
+            newState = featuredData.filter((_, index) => index > count)
+        } else {
+            throw new Error('no matching action type')
+        }
+        return newState
+    }
+    const [state, dispatch] = useReducer(reducer, featuredData)
+    useEffect(() => {
+        dispatch({ type: 'SHIFT' })
+    }, [count])
+    const header = useRef(null)
 
     return (
         <>
@@ -37,7 +52,11 @@ const HomePage = () => {
                         quod?
                     </p>
                     <Link to="./products">
-                        <button className="mainBtn" type="button">
+                        <button
+                            className="mainBtn"
+                            type="button"
+                            onClick={() => window.scrollTo(0, 0)}
+                        >
                             shop now
                         </button>
                     </Link>
@@ -49,10 +68,29 @@ const HomePage = () => {
                     featured <span className="colorText">products</span>
                 </h1>
                 <div className="underline"></div>
-                <div className="featuredProductsContainer">
-                    <GetProducts data={featuredData} />
+                <div
+                    className="backIcon"
+                    onClick={() => count >= 0 && setCount((value) => value - 1)}
+                >
+                    <IoIosArrowBack />
                 </div>
-                <button type="button">all products</button>
+                <div
+                    className="forwardIcon"
+                    onClick={() =>
+                        featuredData.length - 4 > count &&
+                        setCount((value) => value + 1)
+                    }
+                >
+                    <IoIosArrowForward />
+                </div>
+                <div className="featuredProductsContainer">
+                    <GetProducts data={state} />
+                </div>
+                <Link to="./products" className="removeLine">
+                    <button type="button" onClick={() => window.scrollTo(0, 0)}>
+                        all products
+                    </button>
+                </Link>
             </section>
 
             <section className={`goals ${scroll && 'goalsIndex'}`}>
