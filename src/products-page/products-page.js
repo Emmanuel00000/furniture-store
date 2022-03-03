@@ -5,6 +5,7 @@ import './products-page.css'
 import { Link } from 'react-router-dom'
 import reducer from './reducer'
 import { UtilsFunc } from './products-page-utils'
+import { useGlobalContext } from '../context'
 
 let expState, expDispatch, expRangeTitleRef
 
@@ -16,9 +17,10 @@ const Products = () => {
         options,
         optionsClickHandler,
         ColorButtons,
-        priceFormat,
+        // priceFormat,
         price,
     } = UtilsFunc()
+    const { priceFormat } = useGlobalContext()
     const [state, dispatch] = useReducer(reducer, initState)
     const rangeTitleRef = useRef(null)
     expState = state

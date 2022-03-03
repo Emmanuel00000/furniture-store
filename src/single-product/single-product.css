@@ -144,3 +144,6 @@
 .prodImgContainer:hover {
     cursor: pointer;
 }
+.cartBtnColor{
+    background-color: green;
+}

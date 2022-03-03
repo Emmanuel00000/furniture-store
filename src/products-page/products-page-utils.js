@@ -4,8 +4,8 @@ import { state, dispatch, rangeTitleRef } from './products-page'
 import { useGlobalContext } from '../context'
 
 export const UtilsFunc = () => {
-    const { productsData: data } = useGlobalContext()
-   
+    const { productsData: data, priceFormat } = useGlobalContext()
+
     const initState = {
         input: '',
         filteredData: data,
@@ -68,10 +68,10 @@ export const UtilsFunc = () => {
         ))
     }
 
-    const priceFormat = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    })
+    // const priceFormat = new Intl.NumberFormat('en-US', {
+    //     style: 'currency',
+    //     currency: 'USD',
+    // })
     const price = data.map((item) => {
         return item.price
     })
@@ -83,7 +83,7 @@ export const UtilsFunc = () => {
         options,
         optionsClickHandler,
         ColorButtons,
-        priceFormat,
+        // priceFormat,
         price,
     }
 }

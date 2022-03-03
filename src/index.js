@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
-import { StrictMode } from 'react/cjs/react.production.min'
+// import { StrictMode } from 'react/cjs/react.production.min'
 import App from './App'
 import { AppProvider } from './context'
 

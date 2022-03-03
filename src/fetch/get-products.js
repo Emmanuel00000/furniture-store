@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { UtilsFunc } from '../products-page/products-page-utils'
+// import { UtilsFunc } from '../products-page/products-page-utils'
+import { useGlobalContext } from '../context'
 
 export const GetProducts = ({ data }) => {
-    const { priceFormat } = UtilsFunc()
+    // const { priceFormat } = UtilsFunc()
+    const { priceFormat } = useGlobalContext()
     return (
         <>
             {data.map((product) => {

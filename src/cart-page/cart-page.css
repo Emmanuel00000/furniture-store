@@ -1,0 +1,130 @@
+.cartBody {
+    width: 86vw;
+    margin: 70px auto;
+}
+.cartHeadings {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr 1fr;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+}
+.cartUnderline {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin: 30px 0;
+}
+.cartPageItems {
+    margin: 60px 0;
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr 1fr;
+    text-transform: capitalize;
+    align-items: center;
+}
+.prodDesc {
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+}
+.cartImgContainer {
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+    display: inline-block;
+}
+.cartImg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.cartItemName {
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+}
+.colorTxt {
+    color: rgba(0, 0, 0, 0.7);
+}
+.cartPrice {
+    color: #008040;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+}
+.cartProdAmount {
+    font-size: 1.8rem;
+    margin: 0 5px;
+    font-weight: bold;
+}
+.priceAndBin {
+    display: flex;
+    justify-content: space-between;
+}
+.cartBin {
+    border: none;
+    background-color: white;
+    font-size: 1.3rem;
+    color: var(--darkRed);
+}
+.cartBin:hover {
+    cursor: pointer;
+}
+.shopAndClr {
+    display: flex;
+    justify-content: space-between;
+}
+.contShopping,
+.clrCart {
+    padding: 8px 15px;
+    color: white;
+    background-color: var(--darkBlue);
+    border: none;
+    text-transform: capitalize;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin: 30px 0;
+}
+.clrCart {
+    background-color: var(--darkRed);
+    padding: 0 15px;
+}
+.contShopping:hover,
+.clrCart:hover {
+    cursor: pointer;
+}
+.totalContainer {
+    width: 430px;
+    height: 250px;
+    margin: 30px 0 0 auto;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 40px 70px;
+    display: grid;
+    align-items: center;
+}
+.totalSection {
+    display: flex;
+    justify-content: space-between;
+    text-transform: capitalize;
+}
+.subTotal {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.orderTotal {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.cartLogin {
+    display: block;
+    width: 430px;
+    margin: 15px 0 0 auto;
+    background-color: var(--darkBlue);
+    border: none;
+    color: white;
+    text-transform: capitalize;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 7px 0;
+}
+.priceColor{
+    color: #008040;
+    letter-spacing: 1px;
+}

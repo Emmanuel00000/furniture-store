@@ -4,6 +4,7 @@ import HomePage from './home-page/home-page'
 import Products from './products-page/products-page'
 import Navbar from './navbar/navbar'
 import SingleProduct from './single-product/single-product'
+import Cart from './cart-page/cart-page'
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/single-product/:id" element={<SingleProduct />} />
+                <Route path="/cart" element={<Cart />} />
                 <Route
                     path="*"
                     element={

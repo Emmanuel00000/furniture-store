@@ -5,6 +5,11 @@ const AppContext = React.createContext()
 export const AppProvider = ({ children }) => {
     const [headerHeight, setHeaderHeight] = useState(0)
     const [scroll, setScroll] = useState(false)
+    const [rerender, setRerender] = useState({})
+    const priceFormat = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    })
     const [productsData, setProductsData] = useState([])
     const productsUrl = 'https://course-api.com/react-store-products'
     useEffect(() => {
@@ -22,6 +27,9 @@ export const AppProvider = ({ children }) => {
                 setHeaderHeight,
                 scroll,
                 setScroll,
+                rerender,
+                setRerender,
+                priceFormat,
                 productsData,
             }}
         >

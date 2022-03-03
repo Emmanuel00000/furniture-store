@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './navbar.css'
 import { useGlobalContext } from '../context'
+import { FaUserPlus, FaShoppingCart } from 'react-icons/fa'
 
 const Navbar = () => {
     const { headerHeight, scroll, setScroll } = useGlobalContext()
@@ -16,7 +17,7 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll)
     })
     const handleClass = () =>
-        `link ${!(location.pathname === '/') && 'linkColor'} ${
+        `${!(location.pathname === '/') && 'linkColor'} ${
             scroll && 'linkColor'
         }`
 
@@ -32,7 +33,7 @@ const Navbar = () => {
                 <li>
                     <Link
                         to="/"
-                        className={handleClass()}
+                        className={`link ${handleClass()}`}
                         onClick={() => window.scrollTo(0, 0)}
                     >
                         home
@@ -41,13 +42,23 @@ const Navbar = () => {
                 <li>
                     <Link
                         to="/products"
-                        className={handleClass()}
+                        className={`link ${handleClass()}`}
                         onClick={() => window.scrollTo(0, 0)}
                     >
                         products
                     </Link>
                 </li>
             </ul>
+            <div className="navIcons">
+                <span className={`navIconText1 ${handleClass()}`}>cart</span>
+                <Link to="/cart" className={`navIcon ${handleClass()}`}>
+                    <FaShoppingCart />
+                </Link>
+                <span className={`navIconText2 ${handleClass()}`}>login</span>
+                <span className={`navIcon ${handleClass()}`}>
+                    <FaUserPlus />
+                </span>
+            </div>
         </nav>
     )
 }

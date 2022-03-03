@@ -4,7 +4,7 @@
 }
 nav {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 0.6fr;
     align-content: center;
     padding: 20px;
     width: 100vw;
@@ -36,11 +36,36 @@ nav {
     font-size: 1.3rem;
     color: white;
     font-weight: bold;
+    text-transform: capitalize;
     transition-duration: 0.2s;
 }
 .link:hover {
     color: var(--darkYellow);
 }
+.navIcons {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.6rem;
+}
+.navIconText1,
+.navIconText2 {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+.navIconText1 {
+    margin: 0 5px 0 0;
+}
+.navIconText2 {
+    margin: 0 5px 0 30px;
+}
+.navIcon{
+    color: white;
+}
+.navIcon:hover{
+    cursor: pointer;
+}
+
 .linkColor {
     color: black;
 }
