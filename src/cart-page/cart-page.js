@@ -4,6 +4,12 @@ import './cart-page.css'
 // import { UtilsFunc } from '../products-page/products-page-utils'
 import { useGlobalContext } from '../context'
 import { CartItems } from './cart-items'
+import {
+    FaTwitter,
+    FaInstagram,
+    FaFacebookF,
+    FaPinterest,
+} from 'react-icons/fa'
 
 const Cart = () => {
     // const { priceFormat } = UtilsFunc()
@@ -75,6 +81,16 @@ const Cart = () => {
                     login
                 </button>
             </main>
+            <footer>
+                <FaFacebookF className="socialIcon" />
+                <FaInstagram className="socialIcon" />
+                <FaTwitter className="socialIcon" />
+                <FaPinterest className="socialIcon" />
+                <p>
+                    &copy; {new Date().getFullYear()}{' '}
+                    <span>furniture universe</span> all rights reserved
+                </p>
+            </footer>
         </>
     )
 }

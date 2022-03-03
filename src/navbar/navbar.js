@@ -20,6 +20,14 @@ const Navbar = () => {
         `${!(location.pathname === '/') && 'linkColor'} ${
             scroll && 'linkColor'
         }`
+    const itemsInCart = () => {
+        const num = Object.keys(localStorage).reduce((acc, curr) => {
+            const { count } = JSON.parse(localStorage.getItem(curr))
+            acc += count
+            return acc
+        }, 0)
+        return num
+    }
 
     return (
         <nav
@@ -48,10 +56,20 @@ const Navbar = () => {
                         products
                     </Link>
                 </li>
+                <li>
+                    <Link
+                        to="/about"
+                        className={`link ${handleClass()}`}
+                        onClick={() => window.scrollTo(0, 0)}
+                    >
+                        about
+                    </Link>
+                </li>
             </ul>
             <div className="navIcons">
                 <span className={`navIconText1 ${handleClass()}`}>cart</span>
                 <Link to="/cart" className={`navIcon ${handleClass()}`}>
+                    <div className="itemsInCart">{itemsInCart()}</div>
                     <FaShoppingCart />
                 </Link>
                 <span className={`navIconText2 ${handleClass()}`}>login</span>

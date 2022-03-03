@@ -61,6 +61,7 @@ nav {
 }
 .navIcon{
     color: white;
+    position: relative;
 }
 .navIcon:hover{
     cursor: pointer;
@@ -69,3 +70,21 @@ nav {
 .linkColor {
     color: black;
 }
+.itemsInCart{
+    position: absolute;
+    left: 70%;
+    top: -40%;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: var(--darkYellow);
+    font-size: 0.9rem;
+    color: black;
+    font-weight: bold;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+

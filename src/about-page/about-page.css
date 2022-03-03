@@ -1,0 +1,23 @@
+.aboutMain{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 80px;
+    column-gap: 60px;
+}
+.aboutImgContainer{
+    height: 550px;
+    width: 100%;
+    overflow: hidden;
+}
+.imgContainer{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.aboutHeading{
+    font-size: 2.5rem;
+    text-transform: capitalize;
+}
+.rmvCenter{
+    margin: 5px 0 30px 0;
+}

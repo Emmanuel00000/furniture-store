@@ -5,6 +5,7 @@ import Products from './products-page/products-page'
 import Navbar from './navbar/navbar'
 import SingleProduct from './single-product/single-product'
 import Cart from './cart-page/cart-page'
+import About from './about-page/about-page'
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/single-product/:id" element={<SingleProduct />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route

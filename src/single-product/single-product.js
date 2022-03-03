@@ -11,7 +11,12 @@ const singleProductUrl = 'https://course-api.com/react-store-single-product?id='
 
 const SingleProduct = () => {
     // const { priceFormat } = UtilsFunc()
-    const { productsData: data, priceFormat } = useGlobalContext()
+    const {
+        productsData: data,
+        priceFormat,
+        rerender,
+        setRerender,
+    } = useGlobalContext()
     const { id } = useParams()
     const [count, setCount] = useState(
         Object.keys(localStorage).includes(id)
@@ -204,7 +209,10 @@ const SingleProduct = () => {
                             Object.keys(localStorage).includes(id) &&
                             'cartBtnColor'
                         }`}
-                        onClick={cartFunc}
+                        onClick={() => {
+                            cartFunc()
+                            setRerender({ ...rerender })
+                        }}
                     >
                         {Object.keys(localStorage).includes(id)
                             ? JSON.parse(localStorage.getItem(id)).cartBtnText

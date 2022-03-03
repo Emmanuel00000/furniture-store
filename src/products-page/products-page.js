@@ -6,6 +6,12 @@ import { Link } from 'react-router-dom'
 import reducer from './reducer'
 import { UtilsFunc } from './products-page-utils'
 import { useGlobalContext } from '../context'
+import {
+    FaTwitter,
+    FaInstagram,
+    FaFacebookF,
+    FaPinterest,
+} from 'react-icons/fa'
 
 let expState, expDispatch, expRangeTitleRef
 
@@ -130,6 +136,16 @@ const Products = () => {
                     <GetProducts data={state.filteredData} />
                 </main>
             </div>
+            <footer>
+                <FaFacebookF className="socialIcon" />
+                <FaInstagram className="socialIcon" />
+                <FaTwitter className="socialIcon" />
+                <FaPinterest className="socialIcon" />
+                <p>
+                    &copy; {new Date().getFullYear()}{' '}
+                    <span>furniture universe</span> all rights reserved
+                </p>
+            </footer>
         </>
     )
 }
