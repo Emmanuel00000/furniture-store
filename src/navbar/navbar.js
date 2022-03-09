@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './navbar.css'
 import { useGlobalContext } from '../context'
-import { FaUserPlus, FaShoppingCart } from 'react-icons/fa'
+import { FaUserPlus, FaUser, FaShoppingCart } from 'react-icons/fa'
 
 const Navbar = () => {
-    const { headerHeight, scroll, setScroll } = useGlobalContext()
+    const { headerHeight, scroll, setScroll, user } = useGlobalContext()
     const nav = useRef(null)
     const location = useLocation()
 
@@ -27,6 +27,16 @@ const Navbar = () => {
             return acc
         }, 0)
         return num
+    }
+    let userName = ''
+    if (user) {
+        for (const letter of user.email) {
+            if (letter !== '@') {
+                userName += letter
+            } else {
+                break
+            }
+        }
     }
 
     return (
@@ -72,10 +82,15 @@ const Navbar = () => {
                     <div className="itemsInCart">{itemsInCart()}</div>
                     <FaShoppingCart />
                 </Link>
-                <span className={`navIconText2 ${handleClass()}`}>login</span>
-                <span className={`navIcon ${handleClass()}`}>
-                    <FaUserPlus />
+                <span className={`navIconText2 ${handleClass()}`}>
+                    {user ? userName : 'login'}
                 </span>
+                <Link
+                    to={user ? '/user-profile' : '/auth'}
+                    className={`navIcon ${handleClass()}`}
+                >
+                    {user ? <FaUser /> : <FaUserPlus />}
+                </Link>
             </div>
         </nav>
     )

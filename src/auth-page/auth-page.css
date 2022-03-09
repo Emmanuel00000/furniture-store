@@ -1,0 +1,110 @@
+.authMain {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+.authForm {
+    display: grid;
+    position: relative;
+    background-color: white;
+    width: 430px;
+    height: 400px;
+    justify-content: center;
+    align-content: center;
+    row-gap: 10px;
+}
+.authMessage {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    width: 280px;
+}
+.authMessageRed {
+    background-color: rgba(255, 0, 0, 0.411);
+}
+.authMessageGreen {
+    background-color: #50e250;
+}
+.authForm > input,
+.authForm > button {
+    font-size: 0.9rem;
+    padding: 10px;
+    width: 330px;
+    border: none;
+    background-color: #d8e2dc;
+    overflow: hidden;
+}
+.authForm > button {
+    background-color: #0077b6;
+    color: white;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-size: 1rem;
+}
+.switchAuth {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-transform: capitalize;
+}
+.switchAuth > button {
+    color: #0077b6;
+    font-size: 1rem;
+    border: none;
+    background-color: white;
+    text-transform: capitalize;
+}
+.authForm button:hover,
+.authClose:hover {
+    cursor: pointer;
+}
+.authClose {
+    position: absolute;
+    top: 4%;
+    left: 90%;
+    font-size: 1.8rem;
+    color: var(--darkRed);
+    transition-duration: 0.3s;
+}
+.authClose:hover {
+    transform: scale(1.2, 1.2) rotateZ(90deg);
+}
+.authZIndex1 {
+    z-index: 20;
+}
+.authZIndex2 {
+    z-index: -20;
+}
+.authLoadingContainer {
+    height: 36px;
+    overflow: hidden;
+    margin: -10px;
+}
+.authLoading {
+    height: 200%;
+    display: block;
+    margin: -17px auto 0 auto;
+}
+.msgBtn {
+    margin-left: 10px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: blue;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+    text-decoration: underline;
+}
+.hide{
+    display: none;
+}

@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
         style: 'currency',
         currency: 'USD',
     })
+    const [user, setUser] = useState()
     const [productsData, setProductsData] = useState([])
     const productsUrl = 'https://course-api.com/react-store-products'
     useEffect(() => {
@@ -30,6 +31,8 @@ export const AppProvider = ({ children }) => {
                 rerender,
                 setRerender,
                 priceFormat,
+                user,
+                setUser,
                 productsData,
             }}
         >
