@@ -1,11 +1,15 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './navbar.css'
 import { useGlobalContext } from '../context'
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore'
 import { FaUserPlus, FaUser, FaShoppingCart } from 'react-icons/fa'
 
+const colRef = collection(getFirestore(), 'cart')
+
 const Navbar = () => {
-    const { headerHeight, scroll, setScroll, user } = useGlobalContext()
+    const { headerHeight, scroll, setScroll, user, modal } = useGlobalContext()
+    const displayName = user?.displayName
     const nav = useRef(null)
     const location = useLocation()
 
@@ -20,14 +24,17 @@ const Navbar = () => {
         `${!(location.pathname === '/') && 'linkColor'} ${
             scroll && 'linkColor'
         }`
-    const itemsInCart = () => {
-        const num = Object.keys(localStorage).reduce((acc, curr) => {
-            const { count } = JSON.parse(localStorage.getItem(curr))
-            acc += count
-            return acc
-        }, 0)
-        return num
-    }
+    const [cartVal, setCartVal] = useState(0)
+    useEffect(() => {
+        const unsub = onSnapshot(colRef, (snapshot) => {
+            const total = snapshot.docs.reduce((acc, curr) => {
+                acc += curr.data().count
+                return acc
+            }, 0)
+            setCartVal(total)
+        })
+        return () => unsub()
+    }, [])
     let userName = ''
     if (user) {
         for (const letter of user.email) {
@@ -38,6 +45,10 @@ const Navbar = () => {
             }
         }
     }
+    const [updateName, setUpdateName] = useState()
+    useEffect(() => {
+        setUpdateName(displayName)
+    }, [displayName, modal])
 
     return (
         <nav
@@ -79,11 +90,15 @@ const Navbar = () => {
             <div className="navIcons">
                 <span className={`navIconText1 ${handleClass()}`}>cart</span>
                 <Link to="/cart" className={`navIcon ${handleClass()}`}>
-                    <div className="itemsInCart">{itemsInCart()}</div>
+                    <div
+                        className={`itemsInCart ${cartVal === 0 ? 'hide' : ''}`}
+                    >
+                        {cartVal}
+                    </div>
                     <FaShoppingCart />
                 </Link>
                 <span className={`navIconText2 ${handleClass()}`}>
-                    {user ? userName : 'login'}
+                    {user ? updateName || userName : 'login'}
                 </span>
                 <Link
                     to={user ? '/user-profile' : '/auth'}

@@ -1,0 +1,110 @@
+.personalInfo {
+    grid-column: 1/4;
+    width: fit-content;
+    margin: 70px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 40px 60px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 0fr;
+    row-gap: 30px;
+    column-gap: 40px;
+}
+.personalInfoText {
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+.personalInfoIcon {
+    color: green;
+}
+.logout,
+.deleteAccount {
+    grid-column: 1/4;
+    width: 100px;
+    margin: 20px auto 0 auto;
+    text-transform: capitalize;
+    background-color: var(--darkRed);
+    color: white;
+    border: none;
+    padding: 6px 0;
+    font-size: 1rem;
+}
+.personalInfoIcon:hover,
+.logout:hover,
+.deleteAccount:hover,
+.editProfile button:hover,
+.closeEdit {
+    cursor: pointer;
+}
+.deleteAccount {
+    display: block;
+    width: 120px;
+    font-size: 0.8rem;
+    margin: 0 30px 60px auto;
+}
+.deleteAccMsg{
+    position: absolute;
+    bottom: 8%;
+    right: 2%;
+    background-color: rgba(255, 0, 0, 0.411);
+    padding: 10px;
+}
+.editProfile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0%;
+    width: 100%;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.editProfile > form {
+    position: relative;
+    display: grid;
+    width: 500px;
+    padding: 70px;
+    background-color: white;
+    row-gap: 10px;
+    justify-content: center;
+}
+.closeEdit {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    color: var(--darkRed);
+    font-size: 2rem;
+}
+.editErrorMsg{
+    position: absolute;
+    background-color: rgba(255, 0, 0, 0.411);
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    width: 280px;
+}
+.editProfile input {
+    padding: 10px;
+    font-size: 0.9rem;
+    width: 300px;
+    border: none;
+    background-color: #d8e2dc;
+}
+.editProfile button {
+    text-transform: capitalize;
+    background-color: #0077b6;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    width: 100px;
+    padding: 7px;
+    margin: 15px auto 0 auto;
+}
+.hide {
+    display: none;
+}

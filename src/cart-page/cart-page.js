@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './cart-page.css'
-// import { UtilsFunc } from '../products-page/products-page-utils'
 import { useGlobalContext } from '../context'
 import { CartItems } from './cart-items'
+import {
+    getFirestore,
+    collection,
+    onSnapshot,
+    doc,
+    deleteDoc,
+} from 'firebase/firestore'
 import {
     FaTwitter,
     FaInstagram,
@@ -11,18 +17,30 @@ import {
     FaPinterest,
 } from 'react-icons/fa'
 
+const colRef = collection(getFirestore(), 'cart')
+
 const Cart = () => {
-    // const { priceFormat } = UtilsFunc()
     const { priceFormat } = useGlobalContext()
-    const totalPrice = () => {
-        const total = Object.keys(localStorage).reduce((acc, curr) => {
-            const { count, singleProdData } = JSON.parse(
-                localStorage.getItem(curr)
-            )
-            acc += count * singleProdData.price
-            return acc
-        }, 0)
-        return total
+    const [totalPrice, setTotalPrice] = useState(0)
+    useEffect(() => {
+        const unsub = onSnapshot(colRef, (snapshot) => {
+            const total = snapshot.docs.reduce((acc, curr) => {
+                const { count, singleProdData } = curr.data()
+                acc += count * singleProdData.price
+                return acc
+            }, 0)
+            setTotalPrice(total)
+        })
+        return () => unsub()
+    }, [])
+    const deleteCart = () => {
+        const unsub = onSnapshot(colRef, (snapshot) => {
+            snapshot.docs.forEach((item) => {
+                const docRef = doc(colRef, item.data().singleProdData.id)
+                ;(async () => await deleteDoc(docRef))()
+            })
+            unsub()
+        })
     }
 
     return (
@@ -52,7 +70,11 @@ const Cart = () => {
                             continue shopping
                         </button>
                     </Link>
-                    <button className="clrCart" type="button">
+                    <button
+                        className="clrCart"
+                        type="button"
+                        onClick={deleteCart}
+                    >
                         clear cart
                     </button>
                 </div>
@@ -60,20 +82,24 @@ const Cart = () => {
                     <div className="totalSection subTotal">
                         <p>subtotal :</p>
                         <p className="priceColor">
-                            {priceFormat.format((totalPrice() - 534) / 100)}
+                            {priceFormat.format(
+                                totalPrice > 534 ? (totalPrice - 534) / 100 : 0
+                            )}
                         </p>
                     </div>
                     <div className="totalSection">
                         <p>shipping fee :</p>
                         <p className="priceColor">
-                            {priceFormat.format(534 / 100)}
+                            {priceFormat.format(
+                                totalPrice > 534 ? 534 / 100 : 0
+                            )}
                         </p>
                     </div>
                     <div className="cartUnderline"></div>
                     <div className="totalSection orderTotal">
                         <p>order total :</p>
                         <p className="priceColor">
-                            {priceFormat.format(totalPrice() / 100)}
+                            {priceFormat.format(totalPrice / 100)}
                         </p>
                     </div>
                 </div>

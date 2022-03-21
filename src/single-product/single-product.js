@@ -1,56 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import {
+    getFirestore,
+    collection,
+    doc,
+    getDoc,
+    setDoc,
+    onSnapshot,
+} from 'firebase/firestore'
 import './single-product.css'
-// import data from '../fetch/data'
-import fetchData from '../fetch/fetch-data'
 import { useGlobalContext } from '../context'
-import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
 import { BiPlus, BiMinus } from 'react-icons/bi'
-// import { UtilsFunc } from '../products-page/products-page-utils'
-const singleProductUrl = 'https://course-api.com/react-store-single-product?id='
+import { ShowStars, ShowColors } from './single-product-utils'
+
+const db = getFirestore()
+const colRef = collection(db, 'singleItems')
+const colRef2 = collection(db, 'cart')
 
 const SingleProduct = () => {
-    // const { priceFormat } = UtilsFunc()
-    const {
-        productsData: data,
-        priceFormat,
-        rerender,
-        setRerender,
-    } = useGlobalContext()
+    const { productsData: data, priceFormat } = useGlobalContext()
     const { id } = useParams()
-    const [count, setCount] = useState(
-        Object.keys(localStorage).includes(id)
-            ? JSON.parse(localStorage.getItem(id)).count
-            : 1
-    )
-    const [imgIndex, setImgIndex] = useState(0)
-    const [currName, setCurrName] = useState('')
-    const [colorIndex, setColorIndex] = useState(
-        Object.keys(localStorage).includes(id)
-            ? JSON.parse(localStorage.getItem(id)).colorIndex
-            : 0
-    )
-    const [selectedColor, setSelectedColor] = useState()
-    const [initBtnText, setInitBtnText] = useState('add to cart')
-    useEffect(() => {
-        const selectedProduct = data.find((item) => item.id === id)
-        setCurrName(selectedProduct.name)
-    }, [id, data])
-
     const [singleProdData, setSingleProdData] = useState([])
+    const [selectedColor, setSelectedColor] = useState()
     useEffect(() => {
-        const valueFunc = async () => {
-            const value = await fetchData(`${singleProductUrl}${id}`)
+        ;(async () => {
+            const singleDoc = doc(colRef, id)
+            const getSingleDoc = await getDoc(singleDoc)
+            const value = getSingleDoc.data()
             setSingleProdData(value)
             setSelectedColor(
                 value.colors.filter((_, index) => index === 0).toString()
             )
-        }
-        valueFunc()
+        })()
     }, [id])
-    if (singleProdData.length <= 0) return null
-    if (!selectedColor) return null
-
+    const [isInCart, setIsInCart] = useState(false)
+    const [count, setCount] = useState(1)
+    useEffect(() => {
+        const unsub = onSnapshot(colRef2, async (snapshot) => {
+            const docSnap = await getDoc(doc(colRef2, id))
+            if (docSnap.exists()) {
+                const { count, colorIndex } = docSnap.data()
+                setCount(count)
+                setColorIndex(colorIndex)
+                setIsInCart(docSnap.exists())
+            }
+        })
+        return () => unsub()
+    }, [id])
+    const [colorIndex, setColorIndex] = useState(0)
+    const [imgIndex, setImgIndex] = useState(0)
+    if (singleProdData.length <= 0 && !selectedColor) return null
     const {
         images,
         name,
@@ -63,49 +62,18 @@ const SingleProduct = () => {
         company,
         colors,
     } = singleProdData
-
-    const ShowStars = () =>
-        Array.from({ length: 5 }, (_, index) => (
-            <span className="stars" key={index}>
-                {stars >= index + 1 ? (
-                    <BsStarFill />
-                ) : stars >= index + 0.5 ? (
-                    <BsStarHalf />
-                ) : (
-                    <BsStar />
-                )}
-            </span>
-        ))
-
-    const ShowColors = () =>
-        colors.map((color, index) => (
-            <button
-                key={index}
-                type="button"
-                id="color"
-                className={`color ${index === colorIndex && 'outline'}`}
-                style={{ background: color }}
-                onClick={() => {
-                    setColorIndex(index)
-                    setSelectedColor(color)
-                }}
-            ></button>
-        ))
-
     const cartFunc = () => {
-        stock > 0 && setInitBtnText('edit cart')
-        stock > 0 &&
-            localStorage.setItem(
-                id,
-                JSON.stringify({
+        if (stock > 0) {
+            ;(async () => {
+                await setDoc(doc(colRef2, id), {
                     singleProdData,
                     selectedColor,
                     count,
                     colorIndex,
-                    cartBtnText: 'edit cart',
                     stock,
                 })
-            )
+            })()
+        }
     }
 
     return (
@@ -120,7 +88,7 @@ const SingleProduct = () => {
                         products
                     </Link>
                     <span className="forwardSlash"> / </span>
-                    {currName}
+                    {data.find((item) => item.id === id).name}
                 </h1>
             </div>
             <main className="prodContents">
@@ -154,7 +122,7 @@ const SingleProduct = () => {
                 <div>
                     <h1 className="productName">{name}</h1>
                     <div>
-                        <ShowStars />
+                        <ShowStars stars={stars} />
                         <span className="reviews">{`(${reviews} customer reviews)`}</span>
                     </div>
                     <h3 className="prodPrice">
@@ -175,7 +143,12 @@ const SingleProduct = () => {
                     <div className="prodColors">
                         <span>colors :</span>
                         <span>
-                            <ShowColors />
+                            <ShowColors
+                                colors={colors}
+                                colorIndex={colorIndex}
+                                setColorIndex={setColorIndex}
+                                setSelectedColor={setSelectedColor}
+                            />
                         </span>
                     </div>
                     <div className="addProd">
@@ -205,18 +178,10 @@ const SingleProduct = () => {
                     </div>
                     <button
                         type="button"
-                        className={`toCart ${
-                            Object.keys(localStorage).includes(id) &&
-                            'cartBtnColor'
-                        }`}
-                        onClick={() => {
-                            cartFunc()
-                            setRerender({ ...rerender })
-                        }}
+                        className={`toCart ${isInCart && 'cartBtnColor'}`}
+                        onClick={cartFunc}
                     >
-                        {Object.keys(localStorage).includes(id)
-                            ? JSON.parse(localStorage.getItem(id)).cartBtnText
-                            : initBtnText}
+                        {isInCart ? 'edit cart' : 'add to cart'}
                     </button>
                 </div>
             </main>

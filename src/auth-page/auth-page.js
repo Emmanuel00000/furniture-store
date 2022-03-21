@@ -4,28 +4,18 @@ import authLoading from './auth-loading.gif'
 import { MdOutlineClose } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import { useGlobalContext } from '../context'
-import { initializeApp } from 'firebase/app'
 import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    onAuthStateChanged,
     sendEmailVerification,
-    setPersistence,
-    browserLocalPersistence,
 } from 'firebase/auth'
 
-initializeApp({
-    apiKey: 'AIzaSyDWyTjIxEojn6tznsYv4FXO-TP2vjoQyN0',
-    authDomain: 'furniture-store-development.firebaseapp.com',
-    projectId: 'furniture-store-development',
-})
 const auth = getAuth()
 
 const AuthPage = () => {
     const { setUser } = useGlobalContext()
     const navigate = useNavigate()
-    // navigate(-1, { replace: true })
     const [isLogin, setIsLogin] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState('')
@@ -34,12 +24,14 @@ const AuthPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+
     const timeoutHandler = () =>
         setTimeout(() => {
             setMessage('')
             setColor('')
             setIsVerified(true)
         }, 10000)
+
     const submitHandler = (e) => {
         e.preventDefault()
         ;(async () => {
@@ -52,7 +44,6 @@ const AuthPage = () => {
                     if (auth.currentUser.emailVerified) {
                         navigate(-1, { replace: true })
                         setUser(auth.currentUser)
-                        // setPersistence(auth, browserLocalPersistence)
                     } else {
                         setMessage(
                             'please verify your email in order to log in'
@@ -61,7 +52,6 @@ const AuthPage = () => {
                         timeoutHandler()
                         setIsVerified(false)
                     }
-                    console.log(auth.currentUser)
                 } else {
                     if (password === confirmPassword) {
                         setEmail('')
@@ -76,16 +66,20 @@ const AuthPage = () => {
                         setMessage('check your email for a verification link')
                         await sendEmailVerification(auth.currentUser)
                         let interval = setInterval(async () => {
-                            if (auth.currentUser.emailVerified) {
-                                clearInterval(interval)
-                                navigate(-1, { replace: true })
-                                setUser(auth.currentUser)
+                            try {
+                                if (auth.currentUser.emailVerified) {
+                                    clearInterval(interval)
+                                    navigate(-1, { replace: true })
+                                    setUser(auth.currentUser)
+                                }
+                                await auth.currentUser.reload()
+                            } catch (error) {
+                                console.log(error)
                             }
-                            await auth.currentUser.reload()
                         }, 2000)
                     } else {
                         setMessage(
-                            `Error: password and confirmation password don't match`
+                            `password and confirmation password don't match`
                         )
                         setColor('red')
                         timeoutHandler()
@@ -94,7 +88,7 @@ const AuthPage = () => {
             } catch (error) {
                 setIsLoading(false)
                 const errorMessage = error.message.toString()
-                const final = errorMessage.slice(10)
+                const final = errorMessage.slice(9)
                 setMessage(final)
                 setColor('red')
                 timeoutHandler()
@@ -103,11 +97,6 @@ const AuthPage = () => {
         setPassword('')
         setConfirmPassword('')
     }
-    // onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //         setPersistence(auth, browserLocalPersistence)
-    //     }
-    // })
 
     return (
         <>
@@ -200,10 +189,17 @@ const AuthPage = () => {
                     >
                         {message}
                         <button
+                            type="button"
                             className={`msgBtn ${isVerified ? 'hide' : ''}`}
-                            onClick={async () =>
-                                await sendEmailVerification(auth.currentUser)
-                            }
+                            onClick={async () => {
+                                try {
+                                    await sendEmailVerification(
+                                        auth.currentUser
+                                    )
+                                } catch (error) {
+                                    console.log(error)
+                                }
+                            }}
                         >
                             resend verification email
                         </button>

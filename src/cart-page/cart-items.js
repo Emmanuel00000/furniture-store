@@ -1,21 +1,37 @@
-import React from 'react'
-// import { UtilsFunc } from '../products-page/products-page-utils'
+import React, { useState, useEffect } from 'react'
+import {
+    getFirestore,
+    collection,
+    onSnapshot,
+    doc,
+    updateDoc,
+    deleteDoc,
+} from 'firebase/firestore'
 import { useGlobalContext } from '../context'
 import { BiPlus, BiMinus } from 'react-icons/bi'
 import { IoTrashBinSharp } from 'react-icons/io5'
 
+const colRef = collection(getFirestore(), 'cart')
+
 export const CartItems = () => {
-    const { rerender, setRerender, priceFormat } = useGlobalContext()
-    // const { priceFormat } = UtilsFunc()
-    return Object.keys(localStorage).map((id, index) => {
-        let { singleProdData, selectedColor, count, stock } = JSON.parse(
-            localStorage.getItem(id)
-        )
-        const { images, name, price } = singleProdData
+    const { priceFormat } = useGlobalContext()
+    const [itemsInCart, setItemsInCart] = useState([])
+    useEffect(() => {
+        const unsub = onSnapshot(colRef, (snapshot) => {
+            let dataArr = []
+            snapshot.docs.forEach((item) => {
+                dataArr.push(item.data())
+            })
+            setItemsInCart(dataArr)
+        })
+        return () => unsub()
+    }, [])
+    return itemsInCart.map((item, index) => {
+        let { singleProdData, selectedColor, count, stock } = item
+        const { images, name, price, id } = singleProdData
+        const docRef = doc(colRef, id)
         const toStorage = () => {
-            const updatedObj = JSON.parse(localStorage.getItem(id))
-            updatedObj.count = count
-            localStorage.setItem(id, JSON.stringify(updatedObj))
+            ;(async () => await updateDoc(docRef, { count: count }))()
         }
 
         return (
@@ -52,7 +68,6 @@ export const CartItems = () => {
                                 if (count > 1) {
                                     count = count - 1
                                     toStorage()
-                                    setRerender({ ...rerender })
                                 }
                             }}
                         >
@@ -66,7 +81,6 @@ export const CartItems = () => {
                                 if (count < stock) {
                                     count = count + 1
                                     toStorage()
-                                    setRerender({ ...rerender })
                                 }
                             }}
                         >
@@ -81,8 +95,7 @@ export const CartItems = () => {
                             type="button"
                             className="cartBin"
                             onClick={() => {
-                                localStorage.removeItem(id)
-                                setRerender({ ...rerender })
+                                ;(async () => await deleteDoc(docRef))()
                             }}
                         >
                             <IoTrashBinSharp />
