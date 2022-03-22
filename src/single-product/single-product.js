@@ -24,25 +24,33 @@ const SingleProduct = () => {
     const [selectedColor, setSelectedColor] = useState()
     useEffect(() => {
         ;(async () => {
-            const singleDoc = doc(colRef, id)
-            const getSingleDoc = await getDoc(singleDoc)
-            const value = getSingleDoc.data()
-            setSingleProdData(value)
-            setSelectedColor(
-                value.colors.filter((_, index) => index === 0).toString()
-            )
+            try {
+                const singleDoc = doc(colRef, id)
+                const getSingleDoc = await getDoc(singleDoc)
+                const value = getSingleDoc.data()
+                setSingleProdData(value)
+                setSelectedColor(
+                    value.colors.filter((_, index) => index === 0).toString()
+                )
+            } catch (error) {
+                console.log(error)
+            }
         })()
     }, [id])
     const [isInCart, setIsInCart] = useState(false)
     const [count, setCount] = useState(1)
     useEffect(() => {
         const unsub = onSnapshot(colRef2, async (snapshot) => {
-            const docSnap = await getDoc(doc(colRef2, id))
-            if (docSnap.exists()) {
-                const { count, colorIndex } = docSnap.data()
-                setCount(count)
-                setColorIndex(colorIndex)
-                setIsInCart(docSnap.exists())
+            try {
+                const docSnap = await getDoc(doc(colRef2, id))
+                if (docSnap.exists()) {
+                    const { count, colorIndex } = docSnap.data()
+                    setCount(count)
+                    setColorIndex(colorIndex)
+                    setIsInCart(docSnap.exists())
+                }
+            } catch (error) {
+                console.log(error)
             }
         })
         return () => unsub()
@@ -65,13 +73,17 @@ const SingleProduct = () => {
     const cartFunc = () => {
         if (stock > 0) {
             ;(async () => {
-                await setDoc(doc(colRef2, id), {
-                    singleProdData,
-                    selectedColor,
-                    count,
-                    colorIndex,
-                    stock,
-                })
+                try {
+                    await setDoc(doc(colRef2, id), {
+                        singleProdData,
+                        selectedColor,
+                        count,
+                        colorIndex,
+                        stock,
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
             })()
         }
     }

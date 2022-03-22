@@ -29,13 +29,16 @@ export const AppProvider = ({ children }) => {
 
     const [productsData, setProductsData] = useState([])
     useEffect(() => {
-        const valueFunc = async () => {
-            let documentData = []
-            const documents = await getDocs(colRef)
-            documents.docs.forEach((item) => documentData.push(item.data()))
-            setProductsData(documentData)
-        }
-        valueFunc()
+        ;(async () => {
+            try {
+                let documentData = []
+                const documents = await getDocs(colRef)
+                documents.docs.forEach((item) => documentData.push(item.data()))
+                setProductsData(documentData)
+            } catch (error) {
+                console.log(error)
+            }
+        })()
     }, [])
     if (productsData.length <= 0) return null
 

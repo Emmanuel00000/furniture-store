@@ -37,7 +37,13 @@ const Cart = () => {
         const unsub = onSnapshot(colRef, (snapshot) => {
             snapshot.docs.forEach((item) => {
                 const docRef = doc(colRef, item.data().singleProdData.id)
-                ;(async () => await deleteDoc(docRef))()
+                ;(async () => {
+                    try {
+                        await deleteDoc(docRef)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                })()
             })
             unsub()
         })

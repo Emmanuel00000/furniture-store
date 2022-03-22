@@ -30,8 +30,12 @@ export const CartItems = () => {
         let { singleProdData, selectedColor, count, stock } = item
         const { images, name, price, id } = singleProdData
         const docRef = doc(colRef, id)
-        const toStorage = () => {
-            ;(async () => await updateDoc(docRef, { count: count }))()
+        const toStorage = async () => {
+            try {
+                await updateDoc(docRef, { count: count })
+            } catch (error) {
+                console.log(error)
+            }
         }
 
         return (
@@ -94,8 +98,12 @@ export const CartItems = () => {
                         <button
                             type="button"
                             className="cartBin"
-                            onClick={() => {
-                                ;(async () => await deleteDoc(docRef))()
+                            onClick={async () => {
+                                try {
+                                    await deleteDoc(docRef)
+                                } catch (error) {
+                                    console.log(error)
+                                }
                             }}
                         >
                             <IoTrashBinSharp />

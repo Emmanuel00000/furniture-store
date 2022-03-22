@@ -1,5 +1,4 @@
 import React from 'react'
-// import data from '../fetch/data'
 import { state, dispatch, rangeTitleRef } from './products-page'
 import { useGlobalContext } from '../context'
 
@@ -68,10 +67,6 @@ export const UtilsFunc = () => {
         ))
     }
 
-    // const priceFormat = new Intl.NumberFormat('en-US', {
-    //     style: 'currency',
-    //     currency: 'USD',
-    // })
     const price = data.map((item) => {
         return item.price
     })
@@ -83,7 +78,6 @@ export const UtilsFunc = () => {
         options,
         optionsClickHandler,
         ColorButtons,
-        // priceFormat,
         price,
     }
 }

@@ -1,5 +1,4 @@
 import React, { useReducer, useRef } from 'react'
-// import data from '../fetch/data'
 import { GetProducts } from '../fetch/get-products'
 import './products-page.css'
 import { Link } from 'react-router-dom'
@@ -23,7 +22,6 @@ const Products = () => {
         options,
         optionsClickHandler,
         ColorButtons,
-        // priceFormat,
         price,
     } = UtilsFunc()
     const { priceFormat } = useGlobalContext()
