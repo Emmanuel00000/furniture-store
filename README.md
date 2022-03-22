@@ -13,31 +13,45 @@ The functions available in this project include:
 # Images
 
 ## Home Page
+
 ![home page image](./preview-images/home-page.jpg)
 ![home page image](./preview-images/home-page-2.jpg)
 ![home page image](./preview-images/home-page-3.jpg)
 ![home page image](./preview-images/home-page-4.jpg)
 
+
 ## Products Page
+
 ![home page image](./preview-images/products-page.jpg)
 ![home page image](./preview-images/products-page-2.jpg)
 
+
 ## Single Product
+
 ![home page image](./preview-images/single-product.jpg)
 ![home page image](./preview-images/single-product-2.jpg)
 
+
 ## Cart Page
+
 ![home page image](./preview-images/cart-page.jpg)
 ![home page image](./preview-images/cart-page-2.jpg)
 
+
 ## Login Page
+
 ![home page image](./preview-images/login-page.jpg)
 
+
 ## Profile Page
+
 ![home page image](./preview-images/profile-page.jpg)
 
+
 ## About Page
+
 ![home page image](./preview-images/about-page.jpg)
+
 
 # Languages Used
 `React.js`
