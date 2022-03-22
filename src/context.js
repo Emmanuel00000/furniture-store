@@ -3,9 +3,9 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, getDocs } from 'firebase/firestore'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 initializeApp({
-    apiKey: 'AIzaSyDWyTjIxEojn6tznsYv4FXO-TP2vjoQyN0',
-    authDomain: 'furniture-store-development.firebaseapp.com',
-    projectId: 'furniture-store-development',
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
 })
 
 const db = getFirestore()
