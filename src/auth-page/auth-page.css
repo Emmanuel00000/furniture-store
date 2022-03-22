@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     z-index: 20;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: white;
     display: grid;
     align-items: center;
     justify-content: center;
@@ -19,6 +19,7 @@
     justify-content: center;
     align-content: center;
     row-gap: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .authMessage {
     position: absolute;
