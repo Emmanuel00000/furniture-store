@@ -5,11 +5,10 @@ import { useGlobalContext } from '../context'
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore'
 import { FaUserPlus, FaUser, FaShoppingCart } from 'react-icons/fa'
 
-const colRef = collection(getFirestore(), 'cart')
-
 const Navbar = () => {
     const { headerHeight, scroll, setScroll, user, modal } = useGlobalContext()
     const displayName = user?.displayName
+    const uid = user?.uid
     const nav = useRef(null)
     const location = useLocation()
 
@@ -26,15 +25,24 @@ const Navbar = () => {
         }`
     const [cartVal, setCartVal] = useState(0)
     useEffect(() => {
-        const unsub = onSnapshot(colRef, (snapshot) => {
-            const total = snapshot.docs.reduce((acc, curr) => {
-                acc += curr.data().count
-                return acc
-            }, 0)
-            setCartVal(total)
-        })
+        let unsub
+        const getVal = (name, dbId) => {
+            const colRef = collection(getFirestore(), name, dbId, 'cart-items')
+            unsub = onSnapshot(colRef, (snapshot) => {
+                const total = snapshot.docs.reduce((acc, curr) => {
+                    acc += curr.data().count
+                    return acc
+                }, 0)
+                setCartVal(total)
+            })
+        }
+        if (user) {
+            getVal('cart', uid)
+        } else {
+            getVal('temp-cart', localStorage.getItem('temp_id'))
+        }
         return () => unsub()
-    }, [])
+    }, [uid, user])
     let userName = ''
     if (user) {
         for (const letter of user.email) {

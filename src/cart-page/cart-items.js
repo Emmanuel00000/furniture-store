@@ -11,26 +11,50 @@ import { useGlobalContext } from '../context'
 import { BiPlus, BiMinus } from 'react-icons/bi'
 import { IoTrashBinSharp } from 'react-icons/io5'
 
-const colRef = collection(getFirestore(), 'cart')
-
 export const CartItems = () => {
-    const { priceFormat } = useGlobalContext()
+    const { priceFormat, user } = useGlobalContext()
+    const uid = user?.uid
     const [itemsInCart, setItemsInCart] = useState([])
+
     useEffect(() => {
-        const unsub = onSnapshot(colRef, (snapshot) => {
-            let dataArr = []
-            snapshot.docs.forEach((item) => {
-                dataArr.push(item.data())
-            })
-            setItemsInCart(dataArr)
-        })
+        let unsub
+        const getVal = (name, dbId) => {
+            unsub = onSnapshot(
+                collection(getFirestore(), name, dbId, 'cart-items'),
+                (snapshot) => {
+                    let dataArr = []
+                    snapshot.docs.forEach((item) => {
+                        dataArr.push(item.data())
+                    })
+                    setItemsInCart(dataArr)
+                }
+            )
+        }
+        if (user) {
+            getVal('cart', uid)
+        } else {
+            getVal('temp-cart', localStorage.getItem('temp_id'))
+        }
         return () => unsub()
-    }, [])
+    }, [user, uid])
+
     return itemsInCart.map((item, index) => {
         let { singleProdData, selectedColor, count, stock } = item
         const { images, name, price, id } = singleProdData
-        const docRef = doc(colRef, id)
-        const toStorage = async () => {
+        let docRef
+        if (user) {
+            const colRef = collection(getFirestore(), 'cart', uid, 'cart-items')
+            docRef = doc(colRef, id)
+        } else {
+            const colRef = collection(
+                getFirestore(),
+                'temp-cart',
+                localStorage.getItem('temp_id'),
+                'cart-items'
+            )
+            docRef = doc(colRef, id)
+        }
+        const ToStorage = async () => {
             try {
                 await updateDoc(docRef, { count: count })
             } catch (error) {
@@ -71,7 +95,7 @@ export const CartItems = () => {
                             onClick={() => {
                                 if (count > 1) {
                                     count = count - 1
-                                    toStorage()
+                                    ToStorage()
                                 }
                             }}
                         >
@@ -84,7 +108,7 @@ export const CartItems = () => {
                             onClick={() => {
                                 if (count < stock) {
                                     count = count + 1
-                                    toStorage()
+                                    ToStorage()
                                 }
                             }}
                         >

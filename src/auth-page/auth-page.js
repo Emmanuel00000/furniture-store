@@ -10,6 +10,7 @@ import {
     signInWithEmailAndPassword,
     sendEmailVerification,
 } from 'firebase/auth'
+import AuthPageUtils from './auth-page-utils'
 
 const auth = getAuth()
 
@@ -40,11 +41,12 @@ const AuthPage = () => {
                     setEmail('')
                     setIsLoading(true)
                     await signInWithEmailAndPassword(auth, email, password)
-                    setIsLoading(false)
                     if (auth.currentUser.emailVerified) {
                         navigate(-1, { replace: true })
-                        setUser(auth.currentUser)
+                        // setUser(auth.currentUser)
+                        // AuthPageUtils()
                     } else {
+                        setIsLoading(false)
                         setMessage(
                             'please verify your email in order to log in'
                         )
@@ -70,7 +72,8 @@ const AuthPage = () => {
                                 if (auth.currentUser.emailVerified) {
                                     clearInterval(interval)
                                     navigate(-1, { replace: true })
-                                    setUser(auth.currentUser)
+                                    // setUser(auth.currentUser)
+                                    // AuthPageUtils()
                                 }
                                 await auth.currentUser.reload()
                             } catch (error) {

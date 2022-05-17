@@ -22,7 +22,7 @@ import authLoading from '../auth-page/auth-loading.gif'
 const auth = getAuth()
 
 const UserProfile = () => {
-    const { user, modal, setModal } = useGlobalContext()
+    const { user, modal, setModal, setUser } = useGlobalContext()
     const { email, displayName } = user
     let userName = ''
     for (const letter of user.email) {

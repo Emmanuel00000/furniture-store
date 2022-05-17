@@ -8,8 +8,19 @@ import SingleProduct from './single-product/single-product'
 import Cart from './cart-page/cart-page'
 import About from './about-page/about-page'
 import AuthPage from './auth-page/auth-page'
-import Checkout from './checkout-page/checkout-page'
 import UserProfile from './user-profile/user-profile'
+import { loadStripe } from '@stripe/stripe-js'
+
+export const getStripe = async () => {
+    try {
+        const val = await loadStripe(
+            'pk_test_51KgLV8HYuOyXEXHskvTNluAbIjxamDQV8kWrwHhbVHGf60XX1GCSDOHDLTcFQfhKaURU9QdnyzvaELUOVm9TpPTE007med84rf'
+        )
+        return val
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 function App() {
     const { user } = useGlobalContext()
@@ -22,10 +33,9 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/single-product/:id" element={<SingleProduct />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/auth" element={<AuthPage />} />
                 <Route
-                    path="/checkout"
-                    element={user ? <Checkout /> : <Navigate replace to="/" />}
+                    path="/auth"
+                    element={!user ? <AuthPage /> : <Navigate replace to="/" />}
                 />
                 <Route
                     path="/user-profile"

@@ -15,11 +15,12 @@ import { ShowStars, ShowColors } from './single-product-utils'
 
 const db = getFirestore()
 const colRef = collection(db, 'singleItems')
-const colRef2 = collection(db, 'cart')
 
 const SingleProduct = () => {
-    const { productsData: data, priceFormat } = useGlobalContext()
+    const { productsData: data, priceFormat, user } = useGlobalContext()
+    const uid = user?.uid
     const { id } = useParams()
+
     const [singleProdData, setSingleProdData] = useState([])
     const [selectedColor, setSelectedColor] = useState()
     useEffect(() => {
@@ -37,27 +38,42 @@ const SingleProduct = () => {
             }
         })()
     }, [id])
+
     const [isInCart, setIsInCart] = useState(false)
     const [count, setCount] = useState(1)
-    useEffect(() => {
-        const unsub = onSnapshot(colRef2, async (snapshot) => {
-            try {
-                const docSnap = await getDoc(doc(colRef2, id))
-                if (docSnap.exists()) {
-                    const { count, colorIndex } = docSnap.data()
-                    setCount(count)
-                    setColorIndex(colorIndex)
-                    setIsInCart(docSnap.exists())
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        })
-        return () => unsub()
-    }, [id])
     const [colorIndex, setColorIndex] = useState(0)
     const [imgIndex, setImgIndex] = useState(0)
+    useEffect(() => {
+        let unsub
+        const getVal = (name, dbId) => {
+            unsub = onSnapshot(
+                collection(db, name, dbId, 'cart-items'),
+                async () => {
+                    try {
+                        const docSnap = await getDoc(
+                            doc(collection(db, name, dbId, 'cart-items'), id)
+                        )
+                        if (docSnap.exists()) {
+                            const { count, colorIndex } = docSnap.data()
+                            setCount(count)
+                            setColorIndex(colorIndex)
+                            setIsInCart(docSnap.exists())
+                        }
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            )
+        }
+        if (user) {
+            getVal('cart', uid)
+        } else {
+            getVal('temp-cart', localStorage.getItem('temp_id'))
+        }
+        return () => unsub()
+    }, [user, id, uid])
     if (singleProdData.length <= 0 && !selectedColor) return null
+
     const {
         images,
         name,
@@ -71,7 +87,8 @@ const SingleProduct = () => {
         colors,
     } = singleProdData
     const cartFunc = () => {
-        if (stock > 0) {
+        const addItems = (name, dbId) => {
+            const colRef2 = collection(db, name, dbId, 'cart-items')
             ;(async () => {
                 try {
                     await setDoc(doc(colRef2, id), {
@@ -85,6 +102,11 @@ const SingleProduct = () => {
                     console.log(error)
                 }
             })()
+        }
+        if (stock > 0 && user) {
+            addItems('cart', uid)
+        } else if (stock > 0) {
+            addItems('temp-cart', localStorage.getItem('temp_id'))
         }
     }
 

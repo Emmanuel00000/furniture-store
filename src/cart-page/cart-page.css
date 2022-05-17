@@ -64,9 +64,6 @@
     font-size: 1.3rem;
     color: var(--darkRed);
 }
-.cartBin:hover {
-    cursor: pointer;
-}
 .shopAndClr {
     display: flex;
     justify-content: space-between;
@@ -87,7 +84,9 @@
     padding: 0 15px;
 }
 .contShopping:hover,
-.clrCart:hover {
+.clrCart:hover,
+.cartBin:hover,
+.cartLogin:hover {
     cursor: pointer;
 }
 .totalContainer {
@@ -123,8 +122,10 @@
     font-size: 1rem;
     letter-spacing: 1px;
     padding: 7px 0;
+    text-align: center;
+    text-decoration: none;
 }
-.priceColor{
+.priceColor {
     color: #008040;
     letter-spacing: 1px;
 }
