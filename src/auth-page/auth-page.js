@@ -3,19 +3,19 @@ import './auth-page.css'
 import authLoading from './auth-loading.gif'
 import { MdOutlineClose } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
-import { useGlobalContext } from '../context'
+// import { useGlobalContext } from '../context'
 import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     sendEmailVerification,
 } from 'firebase/auth'
-import AuthPageUtils from './auth-page-utils'
+// import AuthPageUtils from './auth-page-utils'
 
 const auth = getAuth()
 
 const AuthPage = () => {
-    const { setUser } = useGlobalContext()
+    // const { setUser } = useGlobalContext()
     const navigate = useNavigate()
     const [isLogin, setIsLogin] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
