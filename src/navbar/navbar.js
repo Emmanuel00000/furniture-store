@@ -65,7 +65,7 @@ const Navbar = () => {
                 scroll && 'navBackground'
             }`}
         >
-            <h1 className="storeName">furniture univer</h1>
+            <h1 className="storeName">furniture universe</h1>
             <ul className="links">
                 <li>
                     <Link
