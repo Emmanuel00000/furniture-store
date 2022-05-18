@@ -13,9 +13,7 @@ import { loadStripe } from '@stripe/stripe-js'
 
 export const getStripe = async () => {
     try {
-        const val = await loadStripe(
-            'pk_test_51KgLV8HYuOyXEXHskvTNluAbIjxamDQV8kWrwHhbVHGf60XX1GCSDOHDLTcFQfhKaURU9QdnyzvaELUOVm9TpPTE007med84rf'
-        )
+        const val = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
         return val
     } catch (error) {
         console.log(error)
